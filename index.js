@@ -1,10 +1,10 @@
-import { createUserWithEmailAndPassword} from "./Auth.js";
+import { createUserWithEmailAndPassword } from "./Auth.js";
 import { auth, db } from "./config.js";
 import { doc, setDoc } from "./firestore.js"
 
 function registerUser(event) {
     event.preventDefault();
-    let userName = document.getElementById("name");
+    let userName = document.getElementById("username");
     let userEmail = document.getElementById("email");
     let userPassword = document.getElementById("password");
     createUserWithEmailAndPassword(auth, userEmail.value, userPassword.value)
@@ -14,6 +14,10 @@ function registerUser(event) {
             addUserToDb(userName.value, userEmail.value, user.uid)
             console.log(user)
 
+        }).then(() => {
+            userName.value = "";
+            userEmail.value = "";
+            userPassword.value = "";
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -23,14 +27,12 @@ function registerUser(event) {
 }
 
 async function addUserToDb(name, email, userId) {
-    console.log(userId);
     try {
         await setDoc(doc(db, "users", userId), {
             fullName: name,
             email: email,
             id: userId,
-        });
-        console.log("User added to Firestore ");
+        })
     } catch (e) {
         console.error("Error adding user", e);
     }
