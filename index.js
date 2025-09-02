@@ -11,13 +11,13 @@ function registerUser(event) {
         .then((userCredential) => {
             // Signed up 
             const user = userCredential.user;
-            addUserToDb(userName.value, userEmail.value, user.uid)
-            console.log(user)
+            addUserToDb(userName.value, userEmail.value, user.uid).then(() => {
+                userName.value = "";
+                userEmail.value = "";
+                userPassword.value = "";
+                window.location.replace("./user.html")
+            })
 
-        }).then(() => {
-            userName.value = "";
-            userEmail.value = "";
-            userPassword.value = "";
         })
         .catch((error) => {
             const errorCode = error.code;
