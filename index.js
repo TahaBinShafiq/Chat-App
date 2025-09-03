@@ -56,9 +56,6 @@ function loginUser(event) {
             const user = userCredential.user;
             // ...
             console.log("user Login ====>", user)
-            if (window.location.pathname.includes("register.html") || window.location.pathname.includes("login.html")) {
-                window.location.href = "user.html";
-            }
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -76,7 +73,7 @@ function checkCurrentUser() {
             // https://firebase.google.com/docs/reference/js/auth.user
             const uid = user.uid;
             console.log("ye woh user he jo is waqt login he", user)
-            if(uid){
+            if (uid) {
                 window.location.assign("./user.html")
             }
             // ...
