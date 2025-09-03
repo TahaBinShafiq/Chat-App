@@ -1,5 +1,6 @@
+import { auth, db } from "./config.js";
 import { signOut, onAuthStateChanged } from "./Auth.js";
-import { auth } from "./config.js";
+import {getDocs , collection ,} from "./firestore.js"
 
 
 onAuthStateChanged(auth, (user) => {
@@ -16,6 +17,7 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
+
 function logOut() {
     signOut(auth).then(() => {
         // Sign-out successful.
@@ -25,5 +27,27 @@ function logOut() {
     });
 }
 document.getElementById("signOut").addEventListener("click", logOut);
+
+
+async function getAllUsers() {
+    const querySnapshot = await getDocs(collection(db, "users"));
+    querySnapshot.forEach((doc) => {
+        console.log(doc.data())
+        let {fullName} = doc.data();
+        let userContainer = document.getElementById("user-container")
+
+        userContainer.innerHTML += `<li class="user">
+        <div class="user-info">
+          <div class="avatar">A</div>
+          <span class="user-name">${fullName}</span>
+        </div>
+        <a href=""><button class="chat-btn">Chat</button></a>
+      </li>`
+        
+    });
+}
+
+
+getAllUsers()
 
 

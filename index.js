@@ -13,13 +13,13 @@ function registerUser(event) {
         .then((userCredential) => {
             // Signed up 
             const user = userCredential.user;
+            console.log(user)
             addUserToDb(userName.value, userEmail.value, user.uid).then(() => {
                 userName.value = "";
                 userEmail.value = "";
                 userPassword.value = "";
-                window.location.replace("./user.html")
+                window.location.href = "./user.html"
             })
-
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -28,6 +28,7 @@ function registerUser(event) {
         });
 }
 
+
 async function addUserToDb(name, email, userId) {
     try {
         await setDoc(doc(db, "users", userId), {
@@ -35,6 +36,7 @@ async function addUserToDb(name, email, userId) {
             email: email,
             id: userId,
         })
+        console.log("user db me add ho chuka he")
     } catch (e) {
         console.error("Error adding user", e);
     }
@@ -54,6 +56,9 @@ function loginUser(event) {
             const user = userCredential.user;
             // ...
             console.log("user Login ====>", user)
+            if (window.location.pathname.includes("register.html") || window.location.pathname.includes("login.html")) {
+                window.location.href = "user.html";
+            }
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -72,7 +77,7 @@ function checkCurrentUser() {
             const uid = user.uid;
             console.log("ye woh user he jo is waqt login he", user)
             if(uid){
-                window.location.replace("./user.html")
+                window.location.assign("./user.html")
             }
             // ...
         } else {
@@ -84,6 +89,3 @@ function checkCurrentUser() {
 
 checkCurrentUser();
 
-export {
-    checkCurrentUser,
-}
