@@ -1,6 +1,6 @@
 import { auth, db } from "./config.js";
 import { signOut, onAuthStateChanged } from "./Auth.js";
-import {getDocs , collection ,} from "./firestore.js"
+import { getDocs, collection, } from "./firestore.js"
 
 let currentUser = null;
 onAuthStateChanged(auth, (user) => {
@@ -39,13 +39,13 @@ async function getAllUsers() {
 
         console.log(currentUser)
 
-        if(currentUser === userData.id){
+        if (currentUser === userData.id) {
             return;
         }
 
         console.log(doc.data())
-        
-        let {fullName} = doc.data();
+
+        let { fullName } = doc.data();
         let userContainer = document.getElementById("user-container")
         userContainer.innerHTML += `<li class="user">
         <div class="user-info">
@@ -54,7 +54,7 @@ async function getAllUsers() {
         </div>
         <a href=""><button class="chat-btn">Chat</button></a>
       </li>`
-        
+
     });
 }
 
