@@ -46,9 +46,9 @@ document.getElementById("registerBtn")?.addEventListener("click", registerUser);
 
 function loginUser(event) {
     event.preventDefault();
-    let loginEmail = document.getElementById("email");
-    let loginPassword = document.getElementById("password");
-    signInWithEmailAndPassword(auth, loginEmail, loginPassword)
+    let loginEmail = document.getElementById("login-email");
+    let loginPassword = document.getElementById("login-password");
+    signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
@@ -61,9 +61,7 @@ function loginUser(event) {
         });
 }
 
-document.getElementById("loginBtn").addEventListener("click", loginUser)
-
-
+document.getElementById("loginBtn")?.addEventListener("click", loginUser)
 
 
 function checkCurrentUser() {
@@ -72,7 +70,10 @@ function checkCurrentUser() {
             // User is signed in, see docs for a list of available properties
             // https://firebase.google.com/docs/reference/js/auth.user
             const uid = user.uid;
-            console.log("ye woh user he jo is waqt login he"  , user)
+            console.log("ye woh user he jo is waqt login he", user)
+            if(uid){
+                window.location.replace("./user.html")
+            }
             // ...
         } else {
             // User is signed out
@@ -82,3 +83,7 @@ function checkCurrentUser() {
 }
 
 checkCurrentUser();
+
+export {
+    checkCurrentUser,
+}
