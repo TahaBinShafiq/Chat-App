@@ -36,28 +36,21 @@ async function getAllUsers() {
     querySnapshot.forEach((doc) => {
 
         let userData = doc.data();
-
-        console.log(currentUser)
-
         if (currentUser === userData.id) {
             return;
         }
-
-        console.log(doc.data())
-
-        let { fullName } = doc.data();
+        let {fullName , id:userId} = doc.data();
         let userContainer = document.getElementById("user-container")
         userContainer.innerHTML += `<li class="user">
         <div class="user-info">
           <div class="avatar">A</div>
           <span class="user-name">${fullName}</span>
         </div>
-        <a href=""><button class="chat-btn">Chat</button></a>
+        <a href="${userId}" onclick=""><button class="chat-btn">Chat</button></a>
       </li>`
 
     });
 }
-
 
 getAllUsers()
 

@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "./Auth.js";
 import { auth, db } from "./config.js";
-import { doc, setDoc } from "./firestore.js"
+import { doc, getDoc, setDoc } from "./firestore.js"
 
 
 
@@ -18,7 +18,6 @@ function registerUser(event) {
                 userName.value = "";
                 userEmail.value = "";
                 userPassword.value = "";
-                window.location.href = "./user.html"
             })
         })
         .catch((error) => {
@@ -37,6 +36,7 @@ async function addUserToDb(name, email, userId) {
             id: userId,
         })
         console.log("user db me add ho chuka he")
+        window.location.href = "./user.html"
     } catch (e) {
         console.error("Error adding user", e);
     }
@@ -67,14 +67,18 @@ document.getElementById("loginBtn")?.addEventListener("click", loginUser)
 
 
 function checkCurrentUser() {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
         if (user) {
             // User is signed in, see docs for a list of available properties
             // https://firebase.google.com/docs/reference/js/auth.user
             const uid = user.uid;
             console.log("ye woh user he jo is waqt login he", user)
-            if (uid) {
-                window.location.assign("./user.html")
+
+            const userRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
+            console.log(userSnap)
+            if (userSnap.exists() && uid) {
+                window.location.href = "user.html"; // redirect
             }
             // ...
         } else {
@@ -84,5 +88,7 @@ function checkCurrentUser() {
     });
 }
 
-checkCurrentUser();
+checkCurrentUser()
+
+
 
