@@ -39,19 +39,31 @@ async function getAllUsers() {
         if (currentUser === userData.id) {
             return;
         }
-        let {fullName , id:userId} = doc.data();
+        let { fullName, id: userId } = doc.data();
         let userContainer = document.getElementById("user-container")
         userContainer.innerHTML += `<li class="user">
         <div class="user-info">
-          <div class="avatar">A</div>
+          <div class="avatar"></div>
           <span class="user-name">${fullName}</span>
         </div>
-        <a href="${userId}" onclick=""><button class="chat-btn">Chat</button></a>
+        <button onclick="checkRoom(event)" class="chat-btn" id="roomButton" data-id=${userId}>Chat</button>
       </li>`
 
     });
 }
 
 getAllUsers()
+
+
+window.checkRoom = (event) => {
+    var friendId = event.target.dataset.id
+    console.log(friendId)
+}
+
+
+// function checkRoom(event){
+//     var friendId = event.target.dataset.id
+//     console.log(friendId)
+// }
 
 
