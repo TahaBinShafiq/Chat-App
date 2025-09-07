@@ -1,6 +1,6 @@
 import { auth, db } from "./config.js";
 import { signOut, onAuthStateChanged } from "./Auth.js";
-import { getDocs, collection, addDoc , query , where} from "./firestore.js"
+import { getDocs, collection, addDoc, query, where } from "./firestore.js"
 let currentUser = null;
 onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -54,7 +54,10 @@ async function getAllUsers() {
 getAllUsers()
 
 
-window.checkRoom = async(event) => {
+window.checkRoom = async (event) => {
+
+    const chatBtn = event.target
+    chatBtn.disabled = true;
     var friendId = event.target.dataset.id
     var bothUsers = {
         [currentUser]: true,
@@ -62,25 +65,25 @@ window.checkRoom = async(event) => {
     }
     console.log(bothUsers)
 
-    const q = query(collection(db , "chatrooms") , where(`bothUsers.${currentUser}` , "==" , true), where(`bothUsers.${friendId}` , "==" , true))
+    const q = query(collection(db, "chatrooms"), where(`bothUsers.${currentUser}`, "==", true), where(`bothUsers.${friendId}`, "==", true))
     let roomId = ''
     const rooms = await getDocs(q)
     rooms.forEach((room) => {
         roomId = room.id
     })
 
-    if(!roomId){
-        const docRef = await addDoc(collection(db, "chatrooms"),{
+    if (!roomId) {
+        const docRef = await addDoc(collection(db, "chatrooms"), {
             bothUsers,
-            createdAt : new Date().toISOString(),
-            createdBy : currentUser
+            createdAt: new Date().toISOString(),
+            createdBy: currentUser
+        }).then(() => {
+            window.location.href = "./chat.html"
         })
-    }
-
-    if(roomId){
+    } else if (roomId) {
         window.location.href = "./chat.html"
     }
-    
+
 }
 
 
