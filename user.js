@@ -64,7 +64,11 @@ window.checkRoom = async(event) => {
 
     const q = query(collection(db , "chatrooms") , where(`bothUsers.${currentUser}` , "==" , true), where(`bothUsers.${friendId}` , "==" , true))
     let roomId = ''
-    
+    const rooms = await getDocs(q)
+    rooms.forEach((room) => {
+        roomId = room.id
+    })
+
     const docRef = await addDoc(collection(db, "chatrooms"),{
         bothUsers,
         createdAt : new Date().toISOString(),
