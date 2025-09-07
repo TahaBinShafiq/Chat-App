@@ -62,7 +62,9 @@ window.checkRoom = async(event) => {
     }
     console.log(bothUsers)
 
-
+    const q = query(collection(db , "chatrooms") , where(`bothUsers.${currentUser}` , "==" , true), where(`bothUsers.${friendId}` , "==" , true))
+    let roomId = ''
+    
     const docRef = await addDoc(collection(db, "chatrooms"),{
         bothUsers,
         createdAt : new Date().toISOString(),
