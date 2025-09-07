@@ -83,7 +83,6 @@ window.checkRoom = async (event) => {
     } else if (roomId) {
         window.location.href = "./chat.html"
     }
-
 }
 
 
