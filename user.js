@@ -60,7 +60,7 @@ window.checkRoom = async(event) => {
         [currentUser]: true,
         [friendId]: true
     }
-    console.log(bothUsers)
+   
 
 
     const docRef = await addDoc(collection(db, "chatrooms"),{
