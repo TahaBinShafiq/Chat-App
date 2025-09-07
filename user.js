@@ -69,7 +69,7 @@ window.checkRoom = async(event) => {
         createdBy : currentUser
     })
 
-    console.log(docRef)
+    console.log(docRef.data())
     
 }
 
