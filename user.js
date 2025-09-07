@@ -1,7 +1,6 @@
 import { auth, db } from "./config.js";
 import { signOut, onAuthStateChanged } from "./Auth.js";
-import { getDocs, collection, } from "./firestore.js"
-
+import { getDocs, collection, addDoc } from "./firestore.js"
 let currentUser = null;
 onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -55,15 +54,23 @@ async function getAllUsers() {
 getAllUsers()
 
 
-window.checkRoom = (event) => {
+window.checkRoom = async(event) => {
     var friendId = event.target.dataset.id
-    console.log(friendId)
+    var bothUsers = {
+        [currentUser]: true,
+        [friendId]: true
+    }
+    console.log(bothUsers)
+
+
+    const docRef = await addDoc(collection(db, "chatrooms"),{
+        bothUsers,
+        createdAt : new Date().toISOString(),
+        createdBy : currentUser
+    })
+
+    console.log(docRef)
+    
 }
-
-
-// function checkRoom(event){
-//     var friendId = event.target.dataset.id
-//     console.log(friendId)
-// }
 
 
