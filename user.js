@@ -1,6 +1,6 @@
 import { auth, db } from "./config.js";
 import { signOut, onAuthStateChanged } from "./Auth.js";
-import { getDocs, collection, addDoc } from "./firestore.js"
+import { getDocs, collection, addDoc , query , where} from "./firestore.js"
 let currentUser = null;
 onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -69,13 +69,17 @@ window.checkRoom = async(event) => {
         roomId = room.id
     })
 
-    const docRef = await addDoc(collection(db, "chatrooms"),{
-        bothUsers,
-        createdAt : new Date().toISOString(),
-        createdBy : currentUser
-    })
+    if(!roomId){
+        const docRef = await addDoc(collection(db, "chatrooms"),{
+            bothUsers,
+            createdAt : new Date().toISOString(),
+            createdBy : currentUser
+        })
+    }
 
-    console.log(docRef.data())
+    if(roomId){
+        window.location.href = "./chat.html"
+    }
     
 }
 
