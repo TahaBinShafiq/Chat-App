@@ -103,5 +103,8 @@ document.getElementById("msg-send-btn").addEventListener("click", async () => {
         userId: currentUser
     })
 
+    messageText.value = "";
+
+
 })
 
