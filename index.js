@@ -92,6 +92,6 @@ checkCurrentUser()
 
 
 
-export{
+export {
     checkCurrentUser
 }

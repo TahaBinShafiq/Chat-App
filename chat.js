@@ -94,7 +94,11 @@ document.getElementById("msg-send-btn").addEventListener("click", async () => {
     let messegeId = roomId + new Date()
     console.log(messegeId)
     let messageText = document.getElementById("message-text");
-
+    let inputBox = document.getElementById("input-box")
+    if(messageText.value.trim() === ""){
+        inputBox.style.border = "2px solid green"
+        return;
+    }
 
     const messageRef = doc(db, "chatrooms", roomId, "messeges", messegeId);
     setDoc(messageRef, {
