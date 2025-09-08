@@ -129,17 +129,18 @@ nav{
     background-color: transparent;
     backdrop-filter: blur(40px);
     padding: 10px;
-    position: sticky;
+    position: fixed;
     bottom: 0px;
     left: 0px;
     right: 0px;
     width: 100%;
     display: flex;
+    justify-content: center;
     gap: 40px;
 }
 
 .input-box{
-    width: 80%;
+    width: 60%;
     height: 40px;
     border-radius: 20px;
     background-color: #333;

@@ -66,11 +66,8 @@ function loginUser(event) {
 document.getElementById("loginBtn")?.addEventListener("click", loginUser)
 
 
-function checkCurrentUser(callback) {
+function checkCurrentUser() {
     onAuthStateChanged(auth, async (user) => {
-        if (typeof callback === "function") {
-            callback(user);
-        }
         if (user) {
             // User is signed in, see docs for a list of available properties
             // https://firebase.google.com/docs/reference/js/auth.user
@@ -80,30 +77,21 @@ function checkCurrentUser(callback) {
             const userRef = doc(db, "users", user.uid);
             const userSnap = await getDoc(userRef);
             console.log(userSnap)
-
             if (userSnap.exists() && uid) {
-                callback(user, true)
-            } else {
-                callback(user, false)
+                window.location.href = "user.html"; // redirect
             }
             // ...
         } else {
-            callback(null, false); // user hi login nahi
-            return;
             // User is signed out
             // ...
         }
     });
 }
 
-checkCurrentUser((user, inDb) => {
-    if (user && inDb) {
-        window.location.href = "user.html";
-    }
-});
+checkCurrentUser()
 
 
 
-export {
+export{
     checkCurrentUser
 }

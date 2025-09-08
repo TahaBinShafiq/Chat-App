@@ -18,6 +18,18 @@ onAuthStateChanged(auth, (user) => {
 });
 
 
+
+function logOut() {
+    signOut(auth).then(() => {
+        // Sign-out successful.
+        console.log("sign-out")
+    }).catch((error) => {
+        // An error happened.
+    });
+}
+document.getElementById("signOut").addEventListener("click", logOut);
+
+
 async function getAllUsers() {
     const querySnapshot = await getDocs(collection(db, "users"));
     querySnapshot.forEach((doc) => {
@@ -76,15 +88,3 @@ window.checkRoom = async (event) => {
 }
 
 
-
-
-
-function logOut() {
-    signOut(auth).then(() => {
-        // Sign-out successful.
-        console.log("sign-out")
-    }).catch((error) => {
-        // An error happened.
-    });
-}
-document.getElementById("signOut").addEventListener("click", logOut);
