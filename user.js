@@ -18,18 +18,6 @@ onAuthStateChanged(auth, (user) => {
 });
 
 
-
-function logOut() {
-    signOut(auth).then(() => {
-        // Sign-out successful.
-        console.log("sign-out")
-    }).catch((error) => {
-        // An error happened.
-    });
-}
-document.getElementById("signOut").addEventListener("click", logOut);
-
-
 async function getAllUsers() {
     const querySnapshot = await getDocs(collection(db, "users"));
     querySnapshot.forEach((doc) => {
@@ -77,12 +65,26 @@ window.checkRoom = async (event) => {
             bothUsers,
             createdAt: new Date().toISOString(),
             createdBy: currentUser
-        }).then(() => {
-            window.location.href = "./chat.html"
         })
+        roomId = docRef.id
+        console.log(roomId)
+        window.location.href = `./chat.html?roomId=${roomId}`
+
     } else if (roomId) {
-        window.location.href = "./chat.html"
+        window.location.href = `./chat.html?roomId=${roomId}`
     }
 }
 
 
+
+
+
+function logOut() {
+    signOut(auth).then(() => {
+        // Sign-out successful.
+        console.log("sign-out")
+    }).catch((error) => {
+        // An error happened.
+    });
+}
+document.getElementById("signOut").addEventListener("click", logOut);
