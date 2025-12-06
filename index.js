@@ -34,6 +34,7 @@ function registerUser(event) {
         userName.value = "";
         userEmail.value = "";
         userPassword.value = "";
+        window.location.href = "./user.html";
       });
     })
     .catch((error) => {
@@ -59,7 +60,6 @@ async function addUserToDb(name, email, userId) {
       id: userId,
     });
     console.log("user db me add ho chuka he");
-    window.location.href = "./user.html";
   } catch (e) {
     console.error("Error adding user", e);
   }
