@@ -67,7 +67,6 @@ function getRealTimeData() {
         if (messagesCon) {
             messagesCon.innerHTML = ''
             messages.map((message) => {
-                console.log(message)
                 const { msg, userId } = message
                 const chatItemClass = (userId === currentUser) ? "Chat_item_r" : "Chat_item_l";
                 messagesCon.innerHTML += `
